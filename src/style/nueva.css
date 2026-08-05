@@ -1,0 +1,436 @@
+/* ==========================================================================
+   TO-DO APP — HOJA DE ESTILOS
+   Estructura del archivo:
+   1. Variables CSS (tokens de diseño)
+   2. Reset básico y estilos globales
+   3. Layout general (contenedor de la app)
+   4. Encabezado
+   5. Formulario para agregar tareas
+   6. Mensaje de error
+   7. Filtros
+   8. Lista de tareas
+   9. Estado vacío
+   10. Footer / contador
+   11. Animaciones
+   12. Media queries (responsive)
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIABLES CSS (TOKENS DE DISEÑO)
+   ========================================================================== */
+:root {
+  /* Paleta de colores — tonos suaves índigo/lavanda */
+  --color-fondo: #eef1f8;
+  --color-superficie: #ffffff;
+  --color-primario: #5b6ee8;
+  --color-primario-hover: #4b5cd4;
+  --color-exito: #4cae91;
+  --color-peligro: #e8748a;
+  --color-peligro-hover: #d95c74;
+  --color-texto: #2d3142;
+  --color-texto-suave: #767a8a;
+  --color-borde: #e3e6f0;
+
+  /* Tipografía */
+  --fuente-base: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Espaciados */
+  --espacio-xs: 0.4rem;
+  --espacio-sm: 0.8rem;
+  --espacio-md: 1.2rem;
+  --espacio-lg: 2rem;
+
+  /* Bordes y sombras */
+  --radio-borde: 14px;
+  --radio-borde-sm: 8px;
+  --sombra-suave: 0 8px 24px rgba(45, 49, 66, 0.08);
+  --sombra-elevada: 0 12px 32px rgba(91, 110, 232, 0.18);
+
+  /* Transiciones */
+  --transicion-rapida: 0.18s ease;
+  --transicion-normal: 0.3s ease;
+}
+
+
+/* ==========================================================================
+   2. RESET BÁSICO Y ESTILOS GLOBALES
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--fuente-base);
+  background: linear-gradient(160deg, var(--color-fondo) 0%, #e4e9fb 100%);
+  color: var(--color-texto);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espacio-lg) var(--espacio-md);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input {
+  font-family: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+
+/* ==========================================================================
+   3. LAYOUT GENERAL (CONTENEDOR DE LA APP)
+   ========================================================================== */
+.app {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-md);
+}
+
+.app__card {
+  width: 100%;
+  background-color: var(--color-superficie);
+  border-radius: var(--radio-borde);
+  box-shadow: var(--sombra-suave);
+  padding: var(--espacio-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-md);
+}
+
+.app__creditos {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   4. ENCABEZADO
+   ========================================================================== */
+.app__header {
+  text-align: center;
+}
+
+.app__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.app__subtitle {
+  margin-top: var(--espacio-xs);
+  font-size: 0.9rem;
+  color: var(--color-texto-suave);
+}
+
+
+/* ==========================================================================
+   5. FORMULARIO PARA AGREGAR TAREAS
+   ========================================================================== */
+.task-form {
+  display: flex;
+  gap: var(--espacio-sm);
+}
+
+.task-form__input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--color-borde);
+  border-radius: var(--radio-borde-sm);
+  font-size: 0.95rem;
+  color: var(--color-texto);
+  transition: border-color var(--transicion-rapida), box-shadow var(--transicion-rapida);
+}
+
+.task-form__input:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 4px rgba(91, 110, 232, 0.15);
+}
+
+.task-form__input::placeholder {
+  color: #a5a9ba;
+}
+
+.task-form__button {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem 1.1rem;
+  background-color: var(--color-primario);
+  color: #fff;
+  border-radius: var(--radio-borde-sm);
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: var(--sombra-elevada);
+  transition: background-color var(--transicion-rapida), transform var(--transicion-rapida);
+}
+
+.task-form__button:hover {
+  background-color: var(--color-primario-hover);
+  transform: translateY(-1px);
+}
+
+.task-form__button:active {
+  transform: translateY(0);
+}
+
+.task-form__button-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+
+/* ==========================================================================
+   6. MENSAJE DE ERROR
+   ========================================================================== */
+.mensaje-error {
+  display: none;
+  font-size: 0.85rem;
+  color: var(--color-peligro);
+  background-color: rgba(232, 116, 138, 0.1);
+  border-radius: var(--radio-borde-sm);
+  padding: 0.5rem 0.8rem;
+  animation: aparecer var(--transicion-normal);
+}
+
+.mensaje-error--visible {
+  display: block;
+}
+
+
+/* ==========================================================================
+   7. FILTROS
+   ========================================================================== */
+.filtros {
+  display: flex;
+  gap: var(--espacio-xs);
+  background-color: var(--color-fondo);
+  padding: 0.3rem;
+  border-radius: var(--radio-borde-sm);
+}
+
+.filtros__btn {
+  flex: 1;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-texto-suave);
+  border-radius: var(--radio-borde-sm);
+  transition: background-color var(--transicion-rapida), color var(--transicion-rapida);
+}
+
+.filtros__btn:hover {
+  color: var(--color-texto);
+}
+
+.filtros__btn--activo {
+  background-color: var(--color-superficie);
+  color: var(--color-primario);
+  box-shadow: var(--sombra-suave);
+}
+
+
+/* ==========================================================================
+   8. LISTA DE TAREAS
+   ========================================================================== */
+.lista-tareas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-xs);
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.tarea {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--espacio-sm);
+  padding: 0.7rem 0.9rem;
+  background-color: var(--color-fondo);
+  border-radius: var(--radio-borde-sm);
+  animation: aparecer var(--transicion-normal);
+  transition: background-color var(--transicion-rapida);
+}
+
+.tarea:hover {
+  background-color: #e6e9f7;
+}
+
+.tarea__checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primario);
+  cursor: pointer;
+  accent-color: var(--color-primario);
+}
+
+.tarea__texto {
+  font-size: 0.92rem;
+  color: var(--color-texto);
+  word-break: break-word;
+  transition: color var(--transicion-rapida);
+}
+
+.tarea--completada .tarea__texto {
+  text-decoration: line-through;
+  color: var(--color-texto-suave);
+}
+
+.tarea__texto {
+  cursor: text;
+}
+
+/* Campo que reemplaza al texto durante la edición en línea */
+.tarea__input-edicion {
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
+  border: 2px solid var(--color-primario);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+}
+
+.tarea__input-edicion:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(91, 110, 232, 0.15);
+}
+
+.tarea__btn-eliminar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--color-peligro);
+  font-size: 1rem;
+  transition: background-color var(--transicion-rapida), color var(--transicion-rapida), transform var(--transicion-rapida);
+}
+
+.tarea__btn-eliminar:hover {
+  background-color: var(--color-peligro);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+
+/* ==========================================================================
+   9. ESTADO VACÍO
+   ========================================================================== */
+.estado-vacio {
+  display: none;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-texto-suave);
+  padding: var(--espacio-md) 0;
+}
+
+.estado-vacio--visible {
+  display: block;
+}
+
+
+/* ==========================================================================
+   10. FOOTER / CONTADOR
+   ========================================================================== */
+.app__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-sm);
+  border-top: 1px solid var(--color-borde);
+  padding-top: var(--espacio-md);
+}
+
+.contador-tareas {
+  font-size: 0.82rem;
+  color: var(--color-texto-suave);
+}
+
+.btn-limpiar {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-peligro);
+  transition: color var(--transicion-rapida);
+}
+
+.btn-limpiar:hover {
+  color: var(--color-peligro-hover);
+  text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   11. ANIMACIONES
+   ========================================================================== */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ==========================================================================
+   12. MEDIA QUERIES (RESPONSIVE)
+   ========================================================================== */
+
+/* Tablets */
+@media (max-width: 600px) {
+  .app__card {
+    padding: var(--espacio-md);
+  }
+
+  .app__title {
+    font-size: 1.5rem;
+  }
+}
+
+/* Teléfonos */
+@media (max-width: 400px) {
+  .task-form {
+    flex-direction: column;
+  }
+
+  .task-form__button {
+    justify-content: center;
+  }
+
+  .filtros {
+    flex-direction: column;
+  }
+
+  .app__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espacio-xs);
+  }
+}
