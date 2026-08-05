@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="To-Do App: gestor de tareas simple, rápido y responsive construido con HTML, CSS y JavaScript puro." />
+  <title>To-Do App</title>
+
+  <link rel="stylesheet" href="../src/style/index.css" />
+</head>
+<body>
+
+  <main class="app">
+    <div class="app__card">
+
+      <!-- Encabezado -->
+      <header class="app__header">
+        <h1 class="app__title">📝 To-Do App</h1>
+        <p class="app__subtitle">Organiza tu día, una tarea a la vez</p>
+      </header>
+
+      <!-- Formulario para agregar tareas -->
+      <form id="form-tarea" class="task-form" autocomplete="off">
+        <input
+          type="text"
+          id="input-tarea"
+          class="task-form__input"
+          placeholder="Escribe una nueva tarea..."
+          maxlength="120"
+          aria-label="Nueva tarea"
+        />
+        <button type="submit" class="task-form__button" id="btn-agregar" aria-label="Agregar tarea">
+          <span class="task-form__button-icon">+</span>
+          <span class="task-form__button-text">Agregar</span>
+        </button>
+      </form>
+
+      <!-- Mensaje de error (tarea vacía) -->
+      <p id="mensaje-error" class="mensaje-error" role="alert"></p>
+
+      <!-- Filtros -->
+      <div class="filtros" role="group" aria-label="Filtrar tareas">
+        <button class="filtros__btn filtros__btn--activo" data-filtro="todas">Todas</button>
+        <button class="filtros__btn" data-filtro="pendientes">Pendientes</button>
+        <button class="filtros__btn" data-filtro="completadas">Completadas</button>
+      </div>
+
+      <!-- Lista de tareas -->
+      <ul id="lista-tareas" class="lista-tareas">
+        <!-- Las tareas se insertan aquí dinámicamente con JavaScript -->
+      </ul>
+
+      <!-- Estado vacío -->
+      <p id="estado-vacio" class="estado-vacio">No hay tareas todavía. ¡Agrega la primera! 🎉</p>
+
+      <!-- Footer con contador y acciones -->
+      <footer class="app__footer">
+        <span id="contador-tareas" class="contador-tareas">0 tareas pendientes</span>
+        <button id="btn-limpiar-completadas" class="btn-limpiar">Limpiar completadas</button>
+      </footer>
+
+    </div>
+
+    <p class="app__creditos">Hecho con HTML, CSS y JavaScript puro</p>
+  </main>
+
+  <script src="../src/js/index.js"></script>
+</body>
+</html>
